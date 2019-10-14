@@ -16,9 +16,10 @@ limitations under the License.
 package election
 
 import (
-	corev1 "k8s.io/api/core/v1"
+	"os"
 	"time"
 
+	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/util/uuid"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/kubernetes/scheme"
@@ -53,7 +54,11 @@ func NewElection(config Config, client kubernetes.Interface) (*leaderelection.Le
 
 func getLeaderElectionConfig(config Config, client kubernetes.Interface) (lec leaderelection.LeaderElectionConfig, err error) {
 	leaderElectionBroadcaster := record.NewBroadcaster()
-	recorder := leaderElectionBroadcaster.NewRecorder(scheme.Scheme, corev1.EventSource{Component: ""})
+	host, err := os.Hostname()
+	if err != nil {
+		return
+	}
+	recorder := leaderElectionBroadcaster.NewRecorder(scheme.Scheme, corev1.EventSource{Component: config.ResourceName, Host: host})
 	id := string(uuid.NewUUID())
 
 	rl, err := resourcelock.New(LockType,
