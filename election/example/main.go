@@ -23,12 +23,13 @@ import (
 	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/tools/leaderelection"
+	"os"
 )
 
 func main() {
 	cfg, err := rest.InClusterConfig()
 	if err != nil {
-		cfg, err = clientcmd.BuildConfigFromFlags("", "/Users/dmc/.kube/config")
+		cfg, err = clientcmd.BuildConfigFromFlags("", getHome()+"/.kube/config")
 		if err != nil {
 			panic(err)
 		}
@@ -55,4 +56,12 @@ func main() {
 
 	le.Run(context.Background())
 	select {}
+}
+
+func getHome() string {
+	home := os.Getenv("HOME")
+	if home != "" {
+		return home
+	}
+	return os.Getenv("USERPROFILE")
 }
