@@ -1,4 +1,4 @@
-# k8s-admission-webhook-example
+# admission-webhook-example
 
 Admission webhook controller example with less code
 

@@ -19,8 +19,8 @@ while [[ $# -gt 0 ]]; do
     shift
 done
 
-[[ -z ${service} ]] && service=k8s-admission-webhook-example
-[[ -z ${secret} ]] && secret=k8s-admission-webhook-example-certs
+[[ -z ${service} ]] && service=admission-webhook-example
+[[ -z ${secret} ]] && secret=admission-webhook-example-certs
 [[ -z ${namespace} ]] && namespace=default
 
 csrName=${service}.${namespace}

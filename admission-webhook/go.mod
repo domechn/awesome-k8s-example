@@ -1,4 +1,4 @@
-module k8s-admission-webhook-example
+module admission-webhook
 
 go 1.12
 

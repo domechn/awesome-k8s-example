@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-package main
+package k8s_admission_webhook_example
 
 import (
 	"flag"

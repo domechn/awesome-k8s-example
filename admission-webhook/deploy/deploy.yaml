@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: k8s-admission-webhook-example
-  name: k8s-admission-webhook-example
+    app: admission-webhook-example
+  name: admission-webhook-example
   namespace: default
 spec:
   ports:
@@ -12,28 +12,28 @@ spec:
     protocol: TCP
     targetPort: 8081
   selector:
-    app: k8s-admission-webhook-example
+    app: admission-webhook-example
   type: ClusterIP
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: k8s-admission-webhook-example
-  name: k8s-admission-webhook-example
+    app: admission-webhook-example
+  name: admission-webhook-example
   namespace: default
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: k8s-admission-webhook-example
+      app: admission-webhook-example
   template:
     metadata:
       labels:
-        app: k8s-admission-webhook-example
+        app: admission-webhook-example
     spec:
       containers:
-      - image: domgoer/k8s-admission-webhook-example:master-9e7ce91
+      - image: domgoer/admission-webhook-example:master-9e7ce91
         args:
         - -cert-dir=/etc/webhook/certs
         - -logtostderr
@@ -41,7 +41,7 @@ spec:
         volumeMounts:
         - name: webhook-certs
           mountPath: /etc/webhook/certs
-        name: k8s-admission-webhook-example
+        name: admission-webhook-example
         livenessProbe:
           httpGet:
             path: /healthz
@@ -59,4 +59,4 @@ spec:
       volumes:
       - name: webhook-certs
         secret:
-          secretName: {{ k8s-admission-webhook-example-certs }}
+          secretName: {{ admission-webhook-example-certs }}

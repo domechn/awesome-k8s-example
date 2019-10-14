@@ -3,14 +3,14 @@
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingWebhookConfiguration
 metadata:
-  name: k8s-admission-webhook-example
+  name: admission-webhook-example
   labels:
-    app: k8s-admission-webhook-example
+    app: admission-webhook-example
 webhooks:
 - name: k8s-admission-webhook.mutating.example.app
   clientConfig:
     service:
-      name: k8s-admission-webhook-example
+      name: admission-webhook-example
       namespace: default
       path: /mutate
     caBundle: {{ CA_BUNDLE }}
@@ -26,17 +26,17 @@ webhooks:
     - pods
   namespaceSelector:
     matchLabels:
-      k8s-admission-webhook-example: enabled
+      admission-webhook-example: enabled
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
 metadata:
-  name: k8s-admission-webhook-example
+  name: admission-webhook-example
 webhooks:
 - clientConfig:
     caBundle: {{ CA_BUNDLE }}
     service:
-      name: k8s-admission-webhook-example
+      name: admission-webhook-example
       namespace: default
       path: /validate
   failurePolicy: Fail
@@ -53,4 +53,4 @@ webhooks:
     - pods
   namespaceSelector:
     matchLabels:
-      k8s-admission-webhook-example: enabled
+      admission-webhook-example: enabled
