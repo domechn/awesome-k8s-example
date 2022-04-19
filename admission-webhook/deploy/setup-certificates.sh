@@ -39,6 +39,7 @@ extendedKeyUsage = serverAuth
 subjectAltName = @alt_names
 [alt_names]
 DNS.1 = ${service}.${namespace}.svc
+DNS.2 = ${service}.${namespace}.svc.cluster.local
 EOF
 
 openssl genrsa -out ${tmpdir}/server-key.pem 2048
